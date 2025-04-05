@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  h1= title
+  
+  div.container-fluid
+    div.row
+        each insect, index in results
+            div.col-sm-2(onclick=`buy(${index})`)
+                p Name: #{insect.name}
+                p Size: #{insect.size} 
+                p Life Span: #{insect.lifespan} weeks
+    script.
+        function buy(index) {
+            alert(`You purchased item ${index}`);
+        }
