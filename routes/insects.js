@@ -1,14 +1,8 @@
 var express = require('express');
+const insect_controlers= require('../controllers/insects');
 var router = express.Router();
 
-/* GET home page. */
-router.get('/', function (req, res, next) {
-    let results = [
-        { name: "Monarch Butterfly", size: 10, lifespan: 6 },
-        { name: "Honey Bee", size: 3, lifespan: 5 },
-        { name: "Atlas Moth", size: 25, lifespan: 2 }
-    ];
-    res.render('insects', { title: 'Search Results Insects', results: results });
-});
+/* GET. */
+router.get('/', insect_controlers.insect_view_all_Page);
 
 module.exports = router;

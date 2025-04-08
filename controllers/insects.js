@@ -1,8 +1,16 @@
 var Insect = require('../models/insects');
-// List of all Insects
-exports.insect_list = function (req, res) {
-    res.send('NOT IMPLEMENTED: Insect list');
-};
+// List of all insects
+exports.insect_list = async function(req, res) {
+    try{
+    theInsects = await Insect.find();
+    res.send(theInsects);
+    }
+    catch(err){
+    res.status(500);
+    res.send(`{"error": ${err}}`);
+    } 
+   };
+   
 // for a specific Insect.
 exports.insect_detail = function (req, res) {
     res.send('NOT IMPLEMENTED: Insect detail: ' + req.params.id);
@@ -19,3 +27,16 @@ exports.insect_delete = function (req, res) {
 exports.insect_update_put = function (req, res) {
     res.send('NOT IMPLEMENTED: Insect update PUT' + req.params.id);
 };
+
+// VIEWS
+// Handle a show all view
+exports.insect_view_all_Page = async function(req, res) {
+    try{
+    theInsects = await Insect.find();
+    res.render('insects', { title: 'Insect Search Results', results: theInsects });
+    }
+    catch(err){
+    res.status(500);
+    res.send(`{"error": ${err}}`);
+    } 
+   };
