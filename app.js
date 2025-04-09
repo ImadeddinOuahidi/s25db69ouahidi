@@ -96,7 +96,7 @@ async function recreateDB() {
   });
   console.log("Done");
 }
-let reseed = true;
+let reseed = false;
 if (reseed) { recreateDB(); }
 
 module.exports = app;
