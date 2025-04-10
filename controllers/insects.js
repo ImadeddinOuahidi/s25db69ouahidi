@@ -46,8 +46,21 @@ exports.insect_delete = function (req, res) {
     res.send('NOT IMPLEMENTED: Insect delete DELETE ' + req.params.id);
 };
 // Handle Insect update form on PUT.
-exports.insect_update_put = function (req, res) {
-    res.send('NOT IMPLEMENTED: Insect update PUT' + req.params.id);
+exports.insect_update_put = async function (req, res) {
+    console.log(`update on id ${req.params.id} with body ${JSON.stringify(req.body)}`)
+    try {
+        let toUpdate = await Insect.findById(req.params.id)
+        // Do updates of properties
+        if (req.body.name) toUpdate.name = req.body.insect_name;
+        if (req.body.size) toUpdate.size = req.body.size;
+        if (req.body.lifespan) toUpdate.lifespan = req.body.lifespan;
+        let result = await toUpdate.save();
+        console.log("Sucess " + result)
+        res.send(result)
+    } catch (err) {
+        res.status(500)
+        res.send(`{"error": ${err}: Update for id ${req.params.id} failed`);
+    }
 };
 
 // VIEWS
