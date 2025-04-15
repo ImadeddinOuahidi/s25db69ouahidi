@@ -1,8 +1,9 @@
 var express = require('express');
-const insect_controlers= require('../controllers/insects');
+const insect_controller= require('../controllers/insects');
 var router = express.Router();
 
 /* GET. */
-router.get('/', insect_controlers.insect_view_all_Page);
-
+router.get('/', insect_controller.insect_view_all_Page);
+/* GET detail insect page */
+router.get('/detail', insect_controller.insect_view_one_Page);
 module.exports = router;

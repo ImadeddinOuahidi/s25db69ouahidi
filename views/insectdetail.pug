@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  h1= title
+  - let insectid = toShow._id
+  - let insectname = toShow.name
+  - let insectsize = toShow.size
+  - let insectlifespan = toShow.lifespan
+
+  div
+    div.row
+      div(class='insectAttr mr-3') Insect ID is:
+      div #{insectid}
+    div.row
+      div(class='insectAttr mr-3') Insect Name is:
+      div #{insectname}
+    div.row
+      div(class='insectAttr mr-3') Insect Size is:
+      div #{insectsize}
+    div.row
+      div(class='insectAttr mr-3') Insect Lifespan (weeks) is:
+      div #{insectlifespan}

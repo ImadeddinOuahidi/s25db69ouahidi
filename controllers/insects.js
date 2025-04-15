@@ -83,4 +83,19 @@ exports.insect_view_all_Page = async function (req, res) {
         res.send(`{"error": ${err}}`);
     }
 };
+// Handle a show one view with id specified by query
+exports.insect_view_one_Page = async function(req, res) {
+    console.log("Single view for insect id " + req.query.id);
+    try {
+      let result = await Insect.findById(req.query.id);
+      res.render('insectdetail', {
+        title: 'Insect Detail',
+        toShow: result
+      });
+    } catch (err) {
+      res.status(500);
+      res.send(`{'error': '${err}'}`);
+    }
+  };
+  
 
