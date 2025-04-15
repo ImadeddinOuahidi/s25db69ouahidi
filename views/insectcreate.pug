@@ -1,0 +1,30 @@
+extends layout
+
+block content
+  h1= title
+  form(id='InsectForm', action="/resource/insects", method="POST")
+    div.form-group
+      label.insectAttr(for='name') Insect Name
+      input#name(type='text', name='name')
+    div.form-group
+      label.insectAttr(for='size') Insect Size
+      input#size(type='text', name='size')
+    div.form-group
+      label.insectAttr(for='lifespan') Lifespan (in weeks)
+      input#lifespan(type='number', name='lifespan')
+    input(type="submit")
+
+  script.
+    document.forms['InsectForm'].addEventListener('submit', (event) => {
+      event.preventDefault();
+      fetch(event.target.action, {
+        method: 'POST',
+        body: new URLSearchParams(new FormData(event.target))
+      }).then((resp) => {
+        return resp.json();
+      }).then((body) => {
+        alert("Save succeeded");
+      }).catch((error) => {
+        alert("Save failed " + error);
+      });
+    });

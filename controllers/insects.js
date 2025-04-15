@@ -84,18 +84,31 @@ exports.insect_view_all_Page = async function (req, res) {
     }
 };
 // Handle a show one view with id specified by query
-exports.insect_view_one_Page = async function(req, res) {
+exports.insect_view_one_Page = async function (req, res) {
     console.log("Single view for insect id " + req.query.id);
     try {
-      let result = await Insect.findById(req.query.id);
-      res.render('insectdetail', {
-        title: 'Insect Detail',
-        toShow: result
-      });
+        let result = await Insect.findById(req.query.id);
+        res.render('insectdetail', {
+            title: 'Insect Detail',
+            toShow: result
+        });
     } catch (err) {
-      res.status(500);
-      res.send(`{'error': '${err}'}`);
+        res.status(500);
+        res.send(`{'error': '${err}'}`);
     }
-  };
-  
+};
+// Handle building the view for creating an insect.
+// No body, no path param, no query.
+
+exports.insect_create_Page = function (req, res) {
+    console.log("create view");
+    try {
+        res.render('insectcreate', { title: 'Insect Create' });
+    } catch (err) {
+        res.status(500);
+        res.send(`{'error': '${err}'}`);
+    }
+};
+
+
 
