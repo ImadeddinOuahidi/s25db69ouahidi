@@ -1,22 +1,27 @@
 extends layout
 
 block content
-  h1= title
-  - let insectid = toShow._id
-  - let insectname = toShow.name
-  - let insectsize = toShow.size
-  - let insectlifespan = toShow.lifespan
+  h1.text-primary.mb-4= title
 
-  div
-    div.row
-      div(class='insectAttr mr-3') Insect ID is:
-      div #{insectid}
-    div.row
-      div(class='insectAttr mr-3') Insect Name is:
-      div #{insectname}
-    div.row
-      div(class='insectAttr mr-3') Insect Size is:
-      div #{insectsize}
-    div.row
-      div(class='insectAttr mr-3') Insect Lifespan (weeks) is:
-      div #{insectlifespan}
+  if (toShow == null)
+    h2.text-danger No insect instance found.
+  else
+    - let insectid = toShow._id
+    - let name = toShow.name
+    - let size = toShow.size
+    - let lifespan = toShow.lifespan
+
+    div.card.shadow.p-4.mb-5.bg-white.rounded(style="max-width: 500px;")
+      h4.mb-3.text-info Insect Details
+      div.row.mb-2
+        div.col-sm-4 ID:
+        div.col-sm-8 #{insectid}
+      div.row.mb-2
+        div.col-sm-4 Name:
+        div.col-sm-8 #{name}
+      div.row.mb-2
+        div.col-sm-4 Size:
+        div.col-sm-8 #{size}
+      div.row.mb-2
+        .col-sm-4.bold Lifespan:
+        div.col-sm-8 #{lifespan}
