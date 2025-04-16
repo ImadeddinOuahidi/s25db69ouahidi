@@ -1,0 +1,41 @@
+extends layout
+
+block content
+  h1= title
+  - let insectid = toShow._id
+  - let name = toShow.name
+  - let size = toShow.size
+  - let lifespan = toShow.lifespan
+
+  div.row(class='mb-2')
+    div.mr-1 ID is
+    div #{insectid}
+
+  - let actionid = "/resource/insects/" + insectid
+
+  form(id='InsectForm', action=actionid, method="PUT")
+    div.form-group
+      label.insectAttr(for='name') Name
+      input#name(type='text', name='name', value=name)
+    div.form-group
+      label.insectAttr(for='size') Size
+      input#size(type='text', name='size', value=size)
+    div.form-group
+      label.insectAttr(for='lifespan') Lifespan
+      input#lifespan(type='number', name='lifespan', value=lifespan)
+    input(type="submit")
+
+  script.
+    document.forms['InsectForm'].addEventListener('submit', (event) => {
+      event.preventDefault();
+      fetch(event.target.action, {
+        method: 'PUT',
+        body: new URLSearchParams(new FormData(event.target))
+      }).then((resp) => {
+        return resp.json();
+      }).then((body) => {
+        alert("Update succeeded");
+      }).catch((error) => {
+        alert("Update failed " + error);
+      });
+    });
