@@ -5,12 +5,14 @@ block content
   
   div.container-fluid
     div.row
-        each insect, index in results
-            div.col-sm-2(onclick=`buy(${index})`)
+        each insect in results
+            - let destination = `dispatch("/insects/update?id=${insect._id}")`
+            div.col-sm-2
                 p Name: #{insect.name}
                 p Size: #{insect.size} 
                 p Life Span: #{insect.lifespan} weeks
+                button.btn.btn-primary.mt-1(onclick=destination) Update
     script.
-        function buy(index) {
-            alert(`You purchased item ${index}`);
+        function dispatch(path){
+            window.location.href = path;
         }
