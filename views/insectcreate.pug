@@ -2,29 +2,46 @@ extends layout
 
 block content
   h1= title
-  form(id='InsectForm', action="/resource/insects", method="POST")
+
+  div#errorMessage(style="color: red; margin-bottom: 1rem;")
+
+  form(id='InsectForm', action='/resource/insects', method="POST")
     div.form-group
-      label.insectAttr(for='name') Insect Name
+      label(for='name') Name
       input#name(type='text', name='name')
     div.form-group
-      label.insectAttr(for='size') Insect Size
+      label(for='size') Size
       input#size(type='text', name='size')
     div.form-group
-      label.insectAttr(for='lifespan') Lifespan (in weeks)
+      label(for='lifespan') Lifespan
       input#lifespan(type='number', name='lifespan')
     input(type="submit")
 
   script.
     document.forms['InsectForm'].addEventListener('submit', (event) => {
       event.preventDefault();
+      const errorDiv = document.getElementById('errorMessage');
+      errorDiv.textContent = ""; // Clear previous errors
+
       fetch(event.target.action, {
         method: 'POST',
         body: new URLSearchParams(new FormData(event.target))
-      }).then((resp) => {
+      })
+      .then(resp => {
+        if (!resp.ok) {
+          return resp.json().then(err => { 
+            throw new Error(err.error); 
+          });
+        }
         return resp.json();
-      }).then((body) => {
-        alert("Save succeeded");
-      }).catch((error) => {
-        alert("Save failed " + error);
+      })
+      .then(body => {
+        errorDiv.style.color = "green";
+        errorDiv.textContent = "Insect created successfully!";
+        event.target.reset();
+      })
+      .catch(error => {
+        errorDiv.style.color = "red";
+        errorDiv.textContent = "Create failed: " + error.message;
       });
     });

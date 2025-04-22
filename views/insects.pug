@@ -2,16 +2,21 @@ extends layout
 
 block content
   h1= title
-  
+  a(href='/insects/create')
+    button.btn.btn-primary.mb-3 Create New Insect
   div.container-fluid
     div.row
         each insect in results
-            - let destination = `dispatch("/insects/update?id=${insect._id}")`
-            div.col-sm-2
+            - let updatePath = `dispatch("/insects/update?id=${insect._id}")`
+            - let detailPath = `dispatch("/insects/detail?id=${insect._id}")`
+            - let deletePath = `dispatch("/insects/delete?id=${insect._id}")`
+            div.col-sm-2.border.p-2.m-1
                 p Name: #{insect.name}
                 p Size: #{insect.size} 
                 p Life Span: #{insect.lifespan} weeks
-                button.btn.btn-primary.mt-1(onclick=destination) Update
+                button.btn.btn-warning.mt-1.mr-1(onclick=updatePath) Update
+                button.btn.btn-info.mt-1.mr-1(onclick=detailPath) Detail
+                button.btn.btn-danger.mt-1(onclick=deletePath) Delete
     script.
         function dispatch(path){
             window.location.href = path;

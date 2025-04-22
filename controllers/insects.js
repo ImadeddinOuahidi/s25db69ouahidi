@@ -25,20 +25,18 @@ exports.insect_detail = async function (req, res) {
 exports.insect_create_post = async function (req, res) {
     console.log(req.body)
     let document = new Insect();
-    // We are looking for a body, since POST does not have query parameters.
-    // Even though bodies can be in many different formats, we will be picky
-    // and require that it be a json object
-    // {"name":"goat", "size":12, "lifespan":4}
     document.name = req.body.name;
     document.size = req.body.size;
     document.lifespan = req.body.lifespan;
     try {
         let result = await document.save();
-        res.send(result);
-    }
-    catch (err) {
-        res.status(500);
-        res.send(`{"error": ${err}}`);
+        res.status(200).json(result);
+    } catch (err) {
+        if (err.name === 'ValidationError') {
+            res.status(400).json({ error: err.message });
+        } else {
+            res.status(500).json({ error: "Server error" });
+        }
     }
 };
 // Handle Insect delete from on DELETE.
