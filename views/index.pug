@@ -1,20 +1,12 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title} by Imadeddin Ouahidi
-
-  button(type='button', class="btn btn-primary", onclick="faster()") Press me
-
-  div(id="faster") add in extra
-
-  script.
-    let value = 1;
-    let amt = 2;
-    function faster() {
-      amt *= 2;
-      value += amt;
-      document.getElementById("faster").innerText = `Faster ${value} times ${amt}`;
-    }
-  
-  a(href="/insects") this is the link to insects
+  if (!user)
+    a(href="/login") Login
+    br
+    a(href="/register") Register
+  if (user)
+    p You are currently logged in as #{user.username}
+    a(href="/insects") Take me to insects
+    br
+    a(href="/logout") Logout
